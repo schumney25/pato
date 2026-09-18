@@ -19,16 +19,16 @@ cp -r origin.0 0
 # -----------------------------------------------------------------------------
 
 # Generate the background mesh
-blockMesh -region porousMat
+blockMesh
 
 # Run snappyHexMesh
-snappyHexMesh -region porousMat -overwrite
+snappyHexMesh -overwrite
 
 # -----------------------------------------------------------------------------
 # Check final mesh
 # -----------------------------------------------------------------------------
 
-checkMesh -region porousMat -allGeometry -allTopology
+checkMesh -allGeometry -allTopology
 
 # -----------------------------------------------------------------------------
 # PATO
