@@ -42,7 +42,7 @@ Pyrolysis {
 }
 
 Mass {
-  MassType ReadPressure; // Solve the semi implicit pressure equation
+  MassType ReadPressure; // Provide/read pressure field required by HeatFlux BC
 }
 
 Energy {
