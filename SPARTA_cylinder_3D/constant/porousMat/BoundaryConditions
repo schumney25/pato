@@ -1,0 +1,11 @@
+/*---------------------------------------------------------------------------*\
+boundaryConditions
+
+Application
+    Provides boundary-condition information at the surface, tabulated as a function of time. 
+
+\*---------------------------------------------------------------------------*/
+
+// time(s)    qConvCFD(W/m2)    chemistryOn
+0            1.0e8             1
+100          1.0e8             1
