@@ -9,7 +9,7 @@ FoamFile {
   version     4.0;
   format      ascii;
   class       dictionary;
-  location    "constant/porousMat";
+  location    "constant";
   object      porousMatProperties;
 }
 
