@@ -7,15 +7,30 @@ cd ${0%/*} || exit 1 # Run from this directory
 # Initialize the script
 pato_init
 
-# create volume fields
+# -----------------------------------------------------------------------------
+# Initial conditions
+# -----------------------------------------------------------------------------
+
+rm -rf 0
 cp -r origin.0 0
 
-# create polyMesh
-m4 cylinderMesh.m4 > system/porousMat/blockMeshDict
-blockMesh -region porousMat
+# -----------------------------------------------------------------------------
+# Mesh generation
+# -----------------------------------------------------------------------------
 
-# run PATOx
+# Generate blockMeshDict from the m4 template
+m4 cylinderMesh.m4 > system/blockMeshDict
+
+# Generate the background mesh
+blockMesh
+
+# Run snappyHexMesh
+snappyHexMesh -overwrite
+
+# -----------------------------------------------------------------------------
+# PATO
+# -----------------------------------------------------------------------------
+
 PATOx
-
 
 # -----------------------------------------------------------------------------
