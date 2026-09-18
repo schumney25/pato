@@ -6,7 +6,7 @@ FoamFile {
   version     4.0;
   format      ascii;
   class       dictionary;
-  location    "constant/porousMat/FourierProperties";
+  location    "constant/FourierProperties";
   object      constantProperties;
 }
 // * * * * * *  Units * * * * * [kg m s K mol A cd] * * * * * * * * * * * * * //
