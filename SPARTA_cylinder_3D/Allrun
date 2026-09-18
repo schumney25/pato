@@ -28,7 +28,7 @@ snappyHexMesh -region porousMat -overwrite
 # Check final mesh
 # -----------------------------------------------------------------------------
 
-runApplication checkMesh -region porousMat -allGeometry -allTopology
+checkMesh -region porousMat -allGeometry -allTopology
 
 # -----------------------------------------------------------------------------
 # PATO
