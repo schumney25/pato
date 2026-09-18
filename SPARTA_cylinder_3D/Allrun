@@ -18,14 +18,11 @@ cp -r origin.0 0
 # Mesh generation
 # -----------------------------------------------------------------------------
 
-# Generate blockMeshDict from the m4 template
-m4 cylinderMesh.m4 > system/blockMeshDict
-
 # Generate the background mesh
-blockMesh
+blockMesh -region porousMat
 
 # Run snappyHexMesh
-snappyHexMesh -overwrite
+snappyHexMesh -region porousMat -overwrite
 
 # -----------------------------------------------------------------------------
 # PATO
