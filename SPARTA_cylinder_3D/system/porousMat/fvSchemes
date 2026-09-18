@@ -14,40 +14,32 @@ FoamFile {
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 ddtSchemes {
-default            Euler; // backward;
+  default            Euler; // backward;
 }
 
 gradSchemes {
-default           Gauss linear corrected;
-  grad(cellMotionU) Gauss linear corrected;
-  grad(Ta)          Gauss linear corrected;
-  grad(p) 	      Gauss linear corrected;
+  default           Gauss linear corrected;
 }
 
 divSchemes {
-default         Gauss  linear corrected;
-
-  div(meshPhi,Xsii) Gauss downwind;
-  div(epsphi,Yi)    Gauss   upwind;
-  div(epsphi,Zi)    Gauss   upwind;
+  default         Gauss  linear corrected;
 }
 
 laplacianSchemes {
-default         Gauss linear corrected;
+  default         Gauss linear corrected;
   laplacian(k,Ta)  Gauss linear corrected;
-  laplacian(Gamma,p)  Gauss linear corrected;
 }
 
 interpolationSchemes {
-default         linear;
+  default         linear;
 }
 
 snGradSchemes {
-default         corrected;
+  default         corrected;
 }
 
 fluxRequired { // used for the ALE correction
-default         no;
+  default         no;
   Ta;
   T;
   p;
