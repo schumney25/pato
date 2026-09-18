@@ -9,7 +9,7 @@ FoamFile {
   version         4.0;
   format          ascii;
   class           dictionary;
-  location        system/porousMat;
+  location        system;
   object          plotDict;
 }
 
