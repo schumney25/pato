@@ -22,7 +22,9 @@ cp -r origin.0 0
 blockMesh -region porousMat
 
 # Run snappyHexMesh
-snappyHexMesh overwrite
+mv constant/porousMat/polyMesh constant/polyMesh
+snappyHexMesh -overwrite
+mv constant/polyMesh constant/porousMat/polyMesh
 
 # -----------------------------------------------------------------------------
 # Check final mesh
