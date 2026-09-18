@@ -1,0 +1,45 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile {
+  version     2.0;
+  format      ascii;
+  class       volScalarField;
+  location    "0/porousMat";
+  object      Ta;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 300;
+
+boundaryField {
+    cylinder
+    {
+        type    HeatFlux;
+        
+        p 101325; // HeatFlux BC requires a pressure...
+        Tbackground  300; // Likewise with Tbackground
+
+        mappingType     constant;
+        mappingFileName "constant/porousMat/BoundaryConditions";
+
+        mappingFields
+        (
+            (qConvCFD    "1")
+            (chemistryOn "2")
+        );
+
+        qRad 0;
+
+        value uniform 300;
+    }
+}
+
+
+// ************************************************************************* //
