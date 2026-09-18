@@ -9,7 +9,7 @@ FoamFile {
   version     2.0;
   format      ascii;
   class       volScalarField;
-  location    "0/porousMat";
+  location    "0";
   object      Ta;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -27,7 +27,7 @@ boundaryField {
         Tbackground  300; // Likewise with Tbackground
 
         mappingType     constant;
-        mappingFileName "constant/porousMat/BoundaryConditions";
+        mappingFileName "constant/BoundaryConditions";
 
         mappingFields
         (
