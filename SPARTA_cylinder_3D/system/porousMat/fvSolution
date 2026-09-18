@@ -16,60 +16,11 @@ FoamFile {
 solvers {
   Ta
   {
-    solver 		 PBiCGStab; // asymmetric matrix solver (for mesh motion)
+    solver 		 PCG; // asymmetric matrix solver (for mesh motion)
     preconditioner   DIC;
     tolerance        1e-06;
     relTol           0;
   };
-
-  p
-  {
-    solver 		 PBiCGStab; // asymmetric matrix solver (for mesh motion)
-    preconditioner   DILU;
-    tolerance        1e-07;
-    relTol           0;
-  };
-
-  Xsii
-  {
-    solver 		 PBiCGStab; // asymmetric matrix solver (for mesh motion)
-    preconditioner   DILU;
-    tolerance        1e-06;
-    relTol           1e-06;
-  };
-
-  Yi
-  {
-    solver 		 PBiCGStab;
-    preconditioner   DILU;
-    tolerance        1e-06;
-    relTol           1e-06;
-  };
-
-  Zi
-  {
-    solver 		 PBiCGStab;
-    preconditioner   DILU;
-    tolerance        1e-06;
-    relTol           1e-06;
-  };
-
-  rT
-  {
-    solver 		 PBiCGStab;
-    preconditioner   DILU;
-    tolerance        1e-06;
-    relTol           1e-06;
-  };
-
-  cellMotionU
-  {
-    solver          PCG;
-    preconditioner  DIC;
-    tolerance       1e-08;
-    relTol          0;
-  };
-
 }
 
 SIMPLE {
