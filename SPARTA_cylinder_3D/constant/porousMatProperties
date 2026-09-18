@@ -34,7 +34,7 @@ IO {
 MaterialProperties {
   MaterialPropertiesType Fourier; // porous material properties
   //MaterialPropertiesDirectory "$PATO_DIR/data/Materials/Fourier/FourierTemplate"; // material properties file
-  MaterialPropertiesDirectory "constant/porousMat";
+  MaterialPropertiesDirectory "constant/";
 }
 
 Pyrolysis {
