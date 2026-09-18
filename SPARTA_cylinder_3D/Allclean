@@ -8,13 +8,13 @@ cd ${0%/*} || exit 1 # Run from this directory
 pato_init
 
 # remove time folders
-rm -rf [1-9]*
+rm -rf [0-9]*
 
 # remove all the *.pdf files
 rm -f plots/*.pdf
 
 # remove mesh
-#rm -rf constant/porousMat/polyMesh
+rm -rf constant/porousMat/polyMesh
 #rm -rf system/porousMat/blockMeshDict
 
 # # remove output folder and add an empty file for git repository
@@ -27,9 +27,9 @@ rm -f plots/*.pdf
 # # remove dynamicCode folder
 # rm -rf dynamicCode
 
-# # remove the processor* folders
-# rm -rf processor*
+# remove the processor* folders
+rm -rf processor*
 
-# # remove temporary files                                                                                                                                                                                                                                    
-# find . -name '*~' -ls -delete
+# remove temporary files                                                                                                                                                                                                                                    
+find . -name '*~' -ls -delete
 
