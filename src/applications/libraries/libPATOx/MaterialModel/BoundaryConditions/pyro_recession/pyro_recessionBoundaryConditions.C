@@ -44,23 +44,97 @@ currentPatchID_(currentPatchID),
 dict_(dict),
 dynamicMesh_(isA<dynamicFvMesh>(mesh)),
 energyModel_(meshLookupOrConstructModel<simpleEnergyModel>(mesh_,regionName_,simpleEnergyModel::modelName)),
-neededFields_( {"Ta","recessionRate"}),
-               debug_(energyModel_.materialDict().lookupOrDefault<Switch>("debug","no"))
+neededFields_({"Ta","recessionRate"}),
+boundaryMapping_(),
+boundaryMapping_ptr(nullptr),
+debug_(energyModel_.materialDict().lookupOrDefault<Switch>("debug","no")),
+cellMotionU_ptr(nullptr)
 {
   // Create new fields in Energy Model
-  scalarFields_.insert("recessionRate",energyModel_.createVolField<scalar>("recessionRate", dimensionedScalar("0", dimLength/dimTime, scalar(0.0))));
-  scalarFields_.insert("recession",energyModel_.createVolField<scalar>("recession", dimensionedScalar("0", dimLength, scalar(0.0))));
-  vectorFields_.insert("initialPosition",energyModel_.createVolField<vector>("initialPosition", dimensionedVector("0", dimLength, vector(0.0,0.0,0.0))));
+  scalarFields_.insert
+  (
+      "recessionRate",
+      energyModel_.createVolField<scalar>
+      (
+          "recessionRate",
+          dimensionedScalar
+          (
+              "0",
+              dimLength/dimTime,
+              scalar(0.0)
+          )
+      )
+  );
 
-  if(!dynamicMesh_) {
-    FatalError << "This boundary works only with dynamicMesh." << exit(FatalError);
+  scalarFields_.insert
+  (
+      "recession",
+      energyModel_.createVolField<scalar>
+      (
+          "recession",
+          dimensionedScalar
+          (
+              "0",
+              dimLength,
+              scalar(0.0)
+          )
+      )
+  );
+
+  vectorFields_.insert
+  (
+      "initialPosition",
+      energyModel_.createVolField<vector>
+      (
+          "initialPosition",
+          dimensionedVector
+          (
+              "0",
+              dimLength,
+              vector(0.0,0.0,0.0)
+          )
+      )
+  );
+
+  // Boundary Mapping
+  boundaryMapping_ =
+      simpleBoundaryMappingModel::New
+      (
+          mesh_,
+          neededFields_,
+          dict_
+      );
+
+  boundaryMapping_ptr =
+      &boundaryMapping_();
+
+  if(!dynamicMesh_)
+  {
+    FatalError
+        << "This boundary works only with dynamicMesh."
+        << exit(FatalError);
   }
 
-  cellMotionU_ptr = &const_cast<volVectorField&>(mesh_.objectRegistry::lookupObject<volVectorField>("cellMotionU"));
+  cellMotionU_ptr =
+      &const_cast<volVectorField&>
+      (
+          mesh_.objectRegistry::lookupObject<volVectorField>
+          (
+              "cellMotionU"
+          )
+      );
 
-  volVectorField& initialPosition_ = vectorFields_["initialPosition"];
-  forAll(initialPosition_.boundaryField()[currentPatchID_], faceI) {
-    initialPosition_.boundaryFieldRef()[currentPatchID_][faceI] =  mesh_.Cf().boundaryField()[currentPatchID_][faceI];
+  volVectorField& initialPosition_ =
+      vectorFields_["initialPosition"];
+
+  forAll
+  (
+      initialPosition_.boundaryField()[currentPatchID_],
+      faceI
+  )
+  {
+    initialPosition_.boundaryFieldRef()[currentPatchID_][faceI] =
+        mesh_.Cf().boundaryField()[currentPatchID_][faceI];
   }
 }
 
