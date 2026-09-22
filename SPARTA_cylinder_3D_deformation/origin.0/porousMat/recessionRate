@@ -22,7 +22,7 @@ boundaryField
 {
     cylinder
     {
-        type    boundaryMapping;
+        type    pyro_recession;
 
         mappingType     "3D-tecplot";
         mappingFileName "constant/porousMat/BoundaryConditions";
