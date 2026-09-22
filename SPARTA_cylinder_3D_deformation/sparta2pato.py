@@ -10,8 +10,8 @@ Usage:
     python3 sparta2pato.py --input surf.dump --output sparta_surface
 
 Output:
-    sparta_surface_0.dat
-    sparta_surface_1.dat
+    sparta_surface_0
+    sparta_surface_1
 """
 
 import argparse
@@ -30,6 +30,8 @@ from pathlib import Path
 
 OUTPUT_FIELDS = {
     "qConvCFD": "v_surf_qConvSPARTA",
+    "massBlowingRate": "v_surf_massBlowCarbon",
+    "recessionVelocity": "v_surf_recessionVelocity",
 }
 
 
@@ -57,11 +59,12 @@ def parse_arguments():
     parser.add_argument(
         "--output",
         "-o",
-        required=True,
+        # required=True,
+        default="BoundaryConditions",
         type=Path,
         help=(
             "Output base name. "
-            "Produces <output>_0.dat and <output>_1.dat."
+            "Produces <output>_0 and <output>_1."
         )
     )
 
@@ -202,6 +205,8 @@ def write_tecplot(filename, centroids, surfaces):
         f.write('"Y"\n')
         f.write('"Z"\n')
         f.write('"qConvCFD"\n')
+        f.write('"massBlowingRate"\n')
+        f.write('"recessionVelocity"\n')
 
         # ZONE
         f.write('ZONE T="SPARTA Surface"\n')
@@ -231,12 +236,17 @@ def write_tecplot(filename, centroids, surfaces):
                 f"{surface['v_surf_qConvSPARTA']:.16e}\n"
             )
 
-        # for tecplot_name, sparta_name in OUTPUT_FIELDS.items():
+        # massBlowingRate block
+        for surface in surfaces:
+            f.write(
+                f"{surface['v_surf_massBlowCarbon']:.16e}\n"
+            )            
 
-        #     for surface in surfaces:
-        #         f.write(
-        #             f"{surface[sparta_name]:.16e}\n"
-        #         )
+        # recessionVelocity block
+        for surface in surfaces:
+            f.write(
+                f"{surface['v_surf_recessionVelocity']:.16e}\n"
+            )
 
 
 # =============================================================================
