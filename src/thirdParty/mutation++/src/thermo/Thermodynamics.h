@@ -39,6 +39,7 @@
 #include "MultiPhaseEquilSolver.h"
 
 #include <Eigen/Dense>
+#include <cassert>
 
 namespace Mutation {
     namespace Thermodynamics {
