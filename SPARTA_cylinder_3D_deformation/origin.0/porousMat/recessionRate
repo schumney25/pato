@@ -1,0 +1,39 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0/porousMat";
+    object      recessionRate;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    cylinder
+    {
+        type    boundaryMapping;
+
+        mappingType     "3D-tecplot";
+        mappingFileName "constant/porousMat/BoundaryConditions";
+
+        mappingFields
+        (
+            (recessionRate "5") // Read in the recession rate calculated from SPARTA as the 6th col from the file. 0-2 are x,y,z
+        );
+
+        value uniform 0;
+    }
+}
+
+// ************************************************************************* //
