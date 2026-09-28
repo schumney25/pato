@@ -1,0 +1,53 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version: 7                                       |
+|   \\  /    A nd           | Website: https://openfoam.org                   |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      topoSetDict;
+}
+
+// Select the external bottom faces at z = 0.
+//
+// The first action selects faces whose CENTRES lie within the thin
+// box around z = 0.
+//
+// The second action intersects that set with the existing "matrix"
+// boundary patch. This prevents internal/interface faces from being
+// selected.
+
+actions
+(
+    {
+        name    bottomFaces;
+        type    faceSet;
+        action  new;
+        source  boxToFace;
+
+        sourceInfo
+        {
+            box (-1e-6 -1e-6 -1e-6) (101e-6 101e-6  1e-6);
+        }
+    }
+
+    {
+        name    bottomFaces;
+        type    faceSet;
+        action  subset;
+        source  patchToFace;
+
+        sourceInfo
+        {
+            name    matrix;
+        }
+    }
+);
+
+// ************************************************************************* //

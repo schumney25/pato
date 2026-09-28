@@ -1,0 +1,44 @@
+#!/bin/bash
+cd ${0%/*} || exit 1 # Run from this directory
+
+# Source PATO run functions
+. $PATO_DIR/src/applications/utilities/runFunctions/RunFunctions
+
+# Initialize the script
+pato_init
+
+# -----------------------------------------------------------------------------
+# Initial conditions
+# -----------------------------------------------------------------------------
+
+rm -rf 0
+cp -r origin.0 0
+
+# -----------------------------------------------------------------------------
+# Mesh generation
+# -----------------------------------------------------------------------------
+
+# Generate the background mesh
+blockMesh
+
+# Run snappyHexMesh
+snappyHexMesh -overwrite
+
+# Make the regions
+splitMeshRegions -cellZones -defaultRegionName matrix -overwrite
+
+# # Decompose the problem
+# decomposePar -region fiber
+# decomposePar -region matrix
+
+# Make the bottom patch
+topoSet -region matrix
+topoSet -region fiber
+createPatch -region matrix -overwrite
+createPatch -region fiber -overwrite
+
+# -----------------------------------------------------------------------------
+# Check final mesh
+# -----------------------------------------------------------------------------
+
+checkMesh -allGeometry -allTopology

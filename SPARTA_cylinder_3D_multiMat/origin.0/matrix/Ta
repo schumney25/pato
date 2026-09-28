@@ -1,0 +1,78 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile {
+  version     2.0;
+  format      ascii;
+  class       volScalarField;
+  location    "0/matrix";
+  object      Ta;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 300;
+
+boundaryField {
+    matrix
+    {
+        type        HeatFlux;
+        mappingType     constant;
+        mappingFileName "constant/matrix/BoundaryConditions";
+
+        mappingFields
+        (
+            (qConvCFD "1")
+        );
+
+        p             101325;
+        Tbackground   300;
+        qRad          0;
+        chemistryOn   1;
+
+        value         uniform 300;
+        
+        // type    HeatFlux;
+        
+        // p 101325; // HeatFlux BC requires a pressure...
+        // Tbackground  300; // Likewise with Tbackground
+
+        // mappingType     "3D-tecplot";
+        // mappingFileName "constant/porousMat/BoundaryConditions";
+
+        // mappingFields
+        // (
+        //     (qConvCFD   "3") // Read in the heat flux from SPARTA as the 4th col from the file. 0-2 are x,y,z
+        // );
+
+        // qRad 0;
+
+        // value uniform 300;
+
+        // chemistryOn 1;
+    }
+
+    matrix_to_fiber
+    {
+        type            compressible::turbulentTemperatureCoupledBaffleMixed;
+
+        value           uniform 300;
+        Tnbr            Ta;
+        kappaMethod     lookup;
+        kappa            k_abl_sym;
+    }  
+
+    bottom
+    {
+        type        fixedValue;
+        value       uniform 300;
+    }
+}
+
+
+// ************************************************************************* //

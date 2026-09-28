@@ -1,0 +1,35 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version: 7                                       |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      createPatchDict;
+}
+
+// No cyclic/coupled patch point synchronisation is required here.
+pointSync false;
+
+patches
+(
+    {
+        name bottom;
+
+        patchInfo
+        {
+            type patch;
+        }
+
+        constructFrom set;
+        set bottomFaces;
+    }
+);
+
+// ************************************************************************* //
