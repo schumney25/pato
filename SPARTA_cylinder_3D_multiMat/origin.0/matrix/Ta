@@ -22,7 +22,20 @@ boundaryField {
     matrix
     {
         type        HeatFlux;
-        value       uniform 300;
+        mappingType     constant;
+        mappingFileName "constant/matrix/BoundaryConditions";
+
+        mappingFields
+        (
+            (qConvCFD "1")
+        );
+
+        p             101325;
+        Tbackground   300;
+        qRad          0;
+        chemistryOn   1;
+
+        value         uniform 300;
         
         // type    HeatFlux;
         
@@ -44,9 +57,15 @@ boundaryField {
         // chemistryOn 1;
     }
 
-    matrix_to_fiber{
-        type        zeroGradient;
-    }    
+    matrix_to_fiber
+    {
+        type            compressible::turbulentTemperatureCoupledBaffleMixed;
+
+        value           uniform 300;
+        Tnbr            Ta;
+        kappaMethod     lookup;
+        kappa            k_abl_sym;
+    }  
 }
 
 
