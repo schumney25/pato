@@ -66,20 +66,33 @@ cellMotionU_ptr(nullptr)
       )
   );
 
-  scalarFields_.insert
-  (
-      "recession",
-      energyModel_.createVolField<scalar>
-      (
-          "recession",
-          dimensionedScalar
-          (
-              "0",
-              dimLength,
-              scalar(0.0)
-          )
-      )
-  );
+  // Reuse the existing recession field when another boundary condition
+  // (e.g. HeatFlux) has already created it in the Energy Model.
+  if (energyModel_.foundVolField("recession"))
+  {
+    scalarFields_.insert
+    (
+        "recession",
+        energyModel_.refVolField<scalar>("recession")
+    );
+  }
+  else
+  {
+    scalarFields_.insert
+    (
+        "recession",
+        energyModel_.createVolField<scalar>
+        (
+            "recession",
+            dimensionedScalar
+            (
+                "0",
+                dimLength,
+                scalar(0.0)
+            )
+        )
+    );
+  }
 
   vectorFields_.insert
   (
